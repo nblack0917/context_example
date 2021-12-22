@@ -12,6 +12,8 @@ This project uses https://www.foaas.com/ for api calls. This api uses vulgar lan
 
 Installs all needed dependencies for the app.\
 
+## Running the app
+
 ### `yarn start`
 
 Runs the app in the development mode.\
