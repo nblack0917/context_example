@@ -8,9 +8,14 @@ This project uses https://www.foaas.com/ for api calls. This api uses vulgar lan
 
 ## Installation
 
+Fork and clone repo to a local directory.
+
+Open in VS Code or text editor of your choice.
+
 ### `yarn`
 
-Installs all needed dependencies for the app.\
+Run through VS Code or Node.js terminal in project root directory.
+Installs all needed dependencies for the app.
 
 ## Running the app
 
@@ -19,5 +24,5 @@ Installs all needed dependencies for the app.\
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
+The page will reload when you make changes.
 You may also see any lint errors in the console.
