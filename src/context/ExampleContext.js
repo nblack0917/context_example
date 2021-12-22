@@ -1,9 +1,20 @@
+//Import React and hooks needed for context
 import React, { createContext, useState, useEffect } from "react";
+//Import axios for api call
 import axios from "axios";
 
+//Create context
 export const Context = createContext();
 
+//Create Provider for context
+//Provider will contain and export all needed states and functions
+//It can be writen like a component including useEffect hooks
+//{ children } are props that come from any components that are wrapped with the provider
+//The provider is imported and used in App.js to wrap the whole application
+//This can also be localized if needed and only wrap specific components
 export const ExampleProvider = ({ children }) => {
+    
+  //Various states that are being exported
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [randomNumber, setRandomNumber] = useState(null);
   const [needsName, setNeedsName] = useState(false);
@@ -16,8 +27,10 @@ export const ExampleProvider = ({ children }) => {
   const [thing, setThing] = useState("");
   const [foaas, setFoaas] = useState(null);
 
+  //variable for api url
   const baseUrl = "https://www.foaas.com/";
 
+  //Function to set appropriate states to collect inputs for different api endpoints
   const handleRandomNumber = () => {
     switch (randomNumber) {
       case 1:
@@ -31,11 +44,15 @@ export const ExampleProvider = ({ children }) => {
         setNeedsFrom(true);
         setNeedsThing(true);
         break;
+      case 4:
+        setNeedsFrom(true);
+        break;
       default:
         break;
     }
   };
 
+  //Function to complete api url and pass GET request through Axios
   const handleFOAAS = async () => {
     let urlParams;
     switch (randomNumber) {
@@ -48,29 +65,35 @@ export const ExampleProvider = ({ children }) => {
       case 3:
         urlParams = `particular/${thing}/${from}`;
         break;
+      case 4:
+        urlParams = `sake/${from}`;
+        break;
       default:
         urlParams = `awesome/Nick`;
         break;
     }
 
     if (urlParams) {
-      console.log("click");
       await axios.get(baseUrl + urlParams).then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
+        //Sets state with data the comes back from api call
         setFoaas(response.data);
       });
     }
   };
 
+  //Function to handle when user clicks login button
+  //User name and Password only needs to be present to pass log i
   const handleLogIn = () => {
     if (userName && password) {
       setIsSignedIn(true);
-      setRandomNumber(Math.floor(Math.random() * 3) + 1);
+      setRandomNumber(Math.floor(Math.random() * 4) + 1);
     } else {
       alert("Please enter any username and password");
     }
   };
 
+  //Function to handle Log Out reset states
   const handleLogOut = () => {
     setIsSignedIn(false);
     setUserName("");
@@ -85,12 +108,15 @@ export const ExampleProvider = ({ children }) => {
     setFoaas(null);
   };
 
+  //useEffect hook to change input states when the randomNumber state changes
   useEffect(() => {
     if (randomNumber) {
       handleRandomNumber();
     }
   }, [randomNumber]);
 
+  //List of exported states and functions
+  //These only need to be export if they are used on other components
   const value = {
     isSignedIn,
     setIsSignedIn,
@@ -118,5 +144,6 @@ export const ExampleProvider = ({ children }) => {
     setRandomNumber,
   };
 
+  //Return statement that will wrap any child elements with the exported context states and functions
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

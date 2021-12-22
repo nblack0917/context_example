@@ -3,8 +3,10 @@ import Button from "@mui/material/Button";
 import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
 
+//Import Context
 import { Context } from "../context/ExampleContext";
 
+//create styles for this component
 const useStyles = makeStyles({
   login: {
     height: 200,
@@ -22,11 +24,12 @@ const useStyles = makeStyles({
 });
 
 export const Login = () => {
+  //create variable name to access styles
   const classes = useStyles();
 
+  //destructure context for only the states and functions needed
   const {
     isSignedIn,
-    setIsSignedIn,
     userName,
     setUserName,
     password,
@@ -36,6 +39,7 @@ export const Login = () => {
 
   return (
     <div>
+      {/* Dynamicaly render content based on isSignedIn state from context */}
       {!isSignedIn && (
         <div className={classes.login}>
           <TextField

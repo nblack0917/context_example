@@ -5,22 +5,17 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import RocketIcon from "@mui/icons-material/Rocket";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-
-import { Context } from "../context/ExampleContext";
-
 import { makeStyles } from "@mui/styles";
 
+//Import Context
+import { Context } from "../context/ExampleContext";
+
+//create styles for this component
 const useStyles = makeStyles({
   navBar: {
     width: "100%",
     height: "100",
     display: "flex",
-    //   flexDirection: "column",
-    //   alignItems: "center",
-    //   justifyContent: "center",
-    //   backgroundColor: "red",
   },
   navButtons: {
     display: "flex",
@@ -34,9 +29,11 @@ const useStyles = makeStyles({
 });
 
 export default function NavBar() {
+  //create variable name to access styles
   const classes = useStyles();
 
-  const { isSignedIn, setIsSignedIn, handleLogOut } = useContext(Context);
+  //destructure context for only the states and functions needed
+  const { isSignedIn, handleLogOut } = useContext(Context);
 
   return (
     <Box className={classes.navBar}>
@@ -58,6 +55,7 @@ export default function NavBar() {
             >
               Features
             </Typography>
+            {/* Dynamicaly render nav bar content based on isSignedIn state from context */}
             {isSignedIn && (
               <Typography
                 variant="h6"
@@ -68,6 +66,7 @@ export default function NavBar() {
               </Typography>
             )}
           </div>
+          {/* Dynamicaly render nav bar content based on isSignedIn state from context */}
           {isSignedIn && (
             <Button onClick={() => handleLogOut()} color="inherit">
               Log Out

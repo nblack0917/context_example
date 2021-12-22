@@ -1,12 +1,21 @@
+//Feature Page only loads if isSignedIn returns true
+
 import React, { useContext } from "react";
 import Button from "@mui/material/Button";
 import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
+//import context
 import { Context } from "../context/ExampleContext";
 
+//create styles for this component
 const useStyles = makeStyles({
+  formContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+  },
   foaasResponse: {
     display: "flex",
     flexDirection: "column",
@@ -14,7 +23,7 @@ const useStyles = makeStyles({
     alignItems: "flex-end",
   },
   textField: {
-    width: 300,
+    width: "100%",
   },
   spacer: {
     height: 15,
@@ -22,8 +31,10 @@ const useStyles = makeStyles({
 });
 
 export const FeaturePage = () => {
+  //create variable name to access styles
   const classes = useStyles();
 
+  //destructure context for only the states and functions needed
   const {
     needsName,
     setNeedsName,
@@ -43,6 +54,8 @@ export const FeaturePage = () => {
     setRandomNumber,
   } = useContext(Context);
 
+  //local function to reset api
+  //sets context states individually
   const resetFOAAS = () => {
     setFoaas(null);
     setNeedsName(false);
@@ -51,11 +64,12 @@ export const FeaturePage = () => {
     setName("");
     setFrom("");
     setThing("");
-    setRandomNumber(Math.floor(Math.random() * 3) + 1);
+    setRandomNumber(Math.floor(Math.random() * 4) + 1);
   };
 
   return (
-    <div>
+    <div className={classes.formContainer}>
+      {/* Only displays text after successful api call */}
       {foaas && (
         <div className={classes.foaasResponse}>
           <Typography variant="h3" component="div" sx={{ paddingBottom: 5 }}>
@@ -65,6 +79,16 @@ export const FeaturePage = () => {
             {foaas.subtitle}
           </Typography>
         </div>
+      )}
+      {/* Displays appropriate text fields depending on which api endpoint is selected */}
+      {!foaas && (
+        <Typography
+          variant="h4"
+          component="div"
+          sx={{ paddingBottom: 5, textAlign: "center" }}
+        >
+          Please fill out the following forms:
+        </Typography>
       )}
       {needsName && !foaas && (
         <>
@@ -105,15 +129,13 @@ export const FeaturePage = () => {
           <div className={classes.spacer}></div>
         </>
       )}
-      {!foaas ? (
-        <Button variant="contained" onClick={() => handleFOAAS()}>
-          Submit
-        </Button>
-      ) : (
-        <Button variant="contained" onClick={() => resetFOAAS()}>
-          Another?
-        </Button>
-      )}
+      {/* Dynamical renders button content and onClick function */}
+      <Button
+        variant="contained"
+        onClick={() => (!foaas ? handleFOAAS() : resetFOAAS)}
+      >
+        {!foaas ? "Submit" : "Another?"}
+      </Button>
     </div>
   );
 };
