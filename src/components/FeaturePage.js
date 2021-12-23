@@ -132,7 +132,7 @@ export const FeaturePage = () => {
       {/* Dynamical renders button content and onClick function */}
       <Button
         variant="contained"
-        onClick={() => (!foaas ? handleFOAAS() : resetFOAAS)}
+        onClick={() => (!foaas ? handleFOAAS() : resetFOAAS())}
       >
         {!foaas ? "Submit" : "Another?"}
       </Button>
