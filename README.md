@@ -60,7 +60,22 @@ Finally return a JSX component for your Context Provided. Pass value as a prop. 
 export const ExampleProvider = ({ children }) => {
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [randomNumber, setRandomNumber] = useState(null);
-     const [userName, setUserName] = useState("");
+    const [userName, setUserName] = useState("");
+
+    const handleLogIn = () => {
+        if (userName) {
+            setIsSignedIn(true);
+            setRandomNumber(Math.floor(Math.random() * 4) + 1);
+        } else {
+            alert("Please enter a username and password");
+        }
+    };
+
+    useEffect(() => {
+        if (randomNumber === 2) {
+            setIsSignedIn(false);
+        }
+    }, [randomNumber]);
 
     value = {
         isSignedIn,
@@ -69,6 +84,7 @@ export const ExampleProvider = ({ children }) => {
         setRandomNumber,
         userName,
         setUserName,
+        handleLogIn,
     };
 
     return <Context.Provider value={value}>{children}</Context.Provider>;
@@ -122,6 +138,7 @@ Inside your component, call useContext with your context name and destructure th
     isSignedIn,
     userName,
     setUserName,
+    handleLogIn,
   } = useContext(Context);
 ```
 
@@ -129,5 +146,5 @@ These are now available anwhere within your component and can be called normally
 
 ```
     setUserName("Nick");
-    onClick={() => (isSignedIn ? handleSignOut() : handleSignIn())}
+    onClick={() => (isSignedIn ? handleLogOut() : handleLogIn())}
 ```
